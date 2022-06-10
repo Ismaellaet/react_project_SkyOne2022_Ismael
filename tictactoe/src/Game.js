@@ -17,6 +17,7 @@ export default class Game extends React.Component {
 	render() {
 		const history = this.state.history;
 		const current = history[history.length - 1];
+		const moves = this.getMoves();
 		const winner = this.calculateWinner(current.squares);
 		const status = winner
 			? `Winner: ${winner}`
@@ -33,6 +34,7 @@ export default class Game extends React.Component {
 
 				<div className="game-info">
 					<div>{status}</div>
+					<ol>{moves}</ol>
 				</div>
 			</div>
 		);
@@ -87,5 +89,21 @@ export default class Game extends React.Component {
 
 	getSquareValue() {
 		return this.state.xIsNext ? "X" : "O";
+	}
+
+	getMoves() {
+		const history = this.state.history;
+		const moves = history.map((step, move) => {
+			const description = move
+				? `Go to move # ${move}`
+				: "Go to game start";
+			return (
+				<li key={move}>
+					<button>{description}</button>
+				</li>
+			);
+		});
+
+		return moves;
 	}
 }
