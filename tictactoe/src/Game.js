@@ -5,13 +5,19 @@ export default class Game extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			squares: Array(9).fill(null),
+			history: [
+				{
+					squares: Array(9).fill(null),
+				},
+			],
 			xIsNext: true,
 		};
 	}
 
 	render() {
-		const winner = this.calculateWinner(this.state.squares);
+		const history = this.state.history;
+		const current = history[history.length - 1];
+		const winner = this.calculateWinner(current.squares);
 		const status = winner
 			? `Winner: ${winner}`
 			: `Next player: ${this.getSquareValue()}`;
@@ -20,7 +26,7 @@ export default class Game extends React.Component {
 			<div className="game">
 				<div className="game-board">
 					<Board
-						squares={this.state.squares}
+						squares={current.squares}
 						onClick={i => this.handleClick(i)}
 					/>
 				</div>
@@ -33,7 +39,9 @@ export default class Game extends React.Component {
 	}
 
 	handleClick(i) {
-		const squares = this.state.squares;
+		const history = this.state.history;
+		const current = history[history.length - 1];
+		const squares = current.squares;
 
 		// Ignores the click if the game has a winner or the square is already marked
 		if (this.calculateWinner(squares) || squares[i]) return;
@@ -41,7 +49,7 @@ export default class Game extends React.Component {
 		squares[i] = this.getSquareValue(); // Set square value
 
 		this.setState({
-			squares,
+			history: history.concat([{ squares }]),
 			xIsNext: !this.state.xIsNext,
 		});
 	}
