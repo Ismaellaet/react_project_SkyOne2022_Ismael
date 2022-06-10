@@ -6,11 +6,17 @@ export default class Board extends React.Component {
 		super(props);
 		this.state = {
 			squares: Array(9).fill(null),
+			xIsNext: true,
 		};
 	}
 
+	getSquareValue() {
+		return this.state.xIsNext ? "X" : "O";
+	}
+
 	render() {
-		const status = "Next player: X";
+		const squareValue = this.getSquareValue();
+		const status = `Next player: ${squareValue}`;
 
 		return (
 			<div>
@@ -49,8 +55,11 @@ export default class Board extends React.Component {
 	handleClick(i) {
 		const squares = this.state.squares;
 
-		squares[i] = "X"; // Set square value
+		squares[i] = this.getSquareValue(); // Set square value
 
-		this.setState({ squares });
+		this.setState({
+			squares,
+			xIsNext: !this.state.xIsNext,
+		});
 	}
 }
