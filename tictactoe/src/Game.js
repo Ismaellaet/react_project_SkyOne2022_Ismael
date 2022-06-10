@@ -10,13 +10,14 @@ export default class Game extends React.Component {
 					squares: Array(9).fill(null),
 				},
 			],
+			stepNumber: 0,
 			xIsNext: true,
 		};
 	}
 
 	render() {
 		const history = this.state.history;
-		const current = history[history.length - 1];
+		const current = history[this.state.stepNumber];
 		const moves = this.getMoves();
 		const winner = this.calculateWinner(current.squares);
 		const status = winner
@@ -41,9 +42,9 @@ export default class Game extends React.Component {
 	}
 
 	handleClick(i) {
-		const history = this.state.history;
+		const history = this.state.history.slice(0, this.state.stepNumber + 1); // Keep the history right even if jumpTo
 		const current = history[history.length - 1];
-		const squares = current.squares;
+		const squares = current.squares.slice();
 
 		// Ignores the click if the game has a winner or the square is already marked
 		if (this.calculateWinner(squares) || squares[i]) return;
@@ -52,6 +53,7 @@ export default class Game extends React.Component {
 
 		this.setState({
 			history: history.concat([{ squares }]),
+			stepNumber: history.length,
 			xIsNext: !this.state.xIsNext,
 		});
 	}
@@ -99,11 +101,20 @@ export default class Game extends React.Component {
 				: "Go to game start";
 			return (
 				<li key={move}>
-					<button>{description}</button>
+					<button onClick={() => this.jumpTo(move)}>
+						{description}
+					</button>
 				</li>
 			);
 		});
 
 		return moves;
+	}
+
+	jumpTo(step) {
+		this.setState({
+			stepNumber: step,
+			xIsNext: step % 2 === 0, // X is next if stepNumber is even
+		});
 	}
 }
