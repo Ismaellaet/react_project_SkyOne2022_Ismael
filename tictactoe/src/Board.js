@@ -9,10 +9,6 @@ export default class Board extends React.Component {
 		};
 	}
 
-	renderSquare(i) {
-		return <Square value={this.state.squares[i]} />;
-	}
-
 	render() {
 		const status = "Next player: X";
 
@@ -39,5 +35,22 @@ export default class Board extends React.Component {
 				</div>
 			</div>
 		);
+	}
+
+	renderSquare(i) {
+		return (
+			<Square
+				value={this.state.squares[i]} // Render square value
+				onClick={() => this.handleClick(i)}
+			/>
+		);
+	}
+
+	handleClick(i) {
+		const squares = this.state.squares;
+
+		squares[i] = "X"; // Set square value
+
+		this.setState({ squares });
 	}
 }
