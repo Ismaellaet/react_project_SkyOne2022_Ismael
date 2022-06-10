@@ -2,26 +2,9 @@ import React from "react";
 import Square from "./Square";
 
 export default class Board extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			squares: Array(9).fill(null),
-			xIsNext: true,
-		};
-	}
-
-	getSquareValue() {
-		return this.state.xIsNext ? "X" : "O";
-	}
-
 	render() {
-		const squareValue = this.getSquareValue();
-		const status = `Next player: ${squareValue}`;
-
 		return (
 			<div>
-				<div className="status">{status}</div>
-
 				<div className="board-row">
 					{this.renderSquare(0)}
 					{this.renderSquare(1)}
@@ -46,20 +29,9 @@ export default class Board extends React.Component {
 	renderSquare(i) {
 		return (
 			<Square
-				value={this.state.squares[i]} // Render square value
-				onClick={() => this.handleClick(i)}
+				value={this.props.squares[i]} // Render square value
+				onClick={() => this.props.onClick(i)}
 			/>
 		);
-	}
-
-	handleClick(i) {
-		const squares = this.state.squares;
-
-		squares[i] = this.getSquareValue(); // Set square value
-
-		this.setState({
-			squares,
-			xIsNext: !this.state.xIsNext,
-		});
 	}
 }
