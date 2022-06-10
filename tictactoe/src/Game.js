@@ -35,6 +35,9 @@ export default class Game extends React.Component {
 	handleClick(i) {
 		const squares = this.state.squares;
 
+		// Ignores the click if the game has a winner or the square is already marked
+		if (this.calculateWinner(squares) || squares[i]) return;
+
 		squares[i] = this.getSquareValue(); // Set square value
 
 		this.setState({
