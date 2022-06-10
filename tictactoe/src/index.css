@@ -8,10 +8,27 @@ body {
 	margin: 2rem;
 }
 
+ol {
+	list-style-type: "== ";
+}
+
+li button {
+	background: transparent;
+
+	border: 1px solid hsl(0, 0%, 60%);
+	border-radius: 0.4rem;
+
+	margin-bottom: 0.8rem;
+	padding: 0.8rem;
+
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
 /* ==== Board ==== */
 .status {
 	margin-bottom: 2rem;
-	font-size: 2.4rem;
+	font-size: 2rem;
 }
 
 /* ==== Square ==== */
@@ -34,7 +51,12 @@ body {
 	cursor: pointer;
 }
 
+/* ==== Game ==== */
 .game {
 	display: flex;
 	flex-direction: row;
+}
+
+.game-info {
+	margin-left: 4rem;
 }
