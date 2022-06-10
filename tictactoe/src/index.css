@@ -21,6 +21,7 @@ body {
 
 	font-size: 4rem;
 	font-weight: bold;
+	line-height: 3.2rem;
 
 	height: 10rem;
 	width: 10rem;
@@ -28,5 +29,12 @@ body {
 	margin-block: -0.1rem;
 	padding: 0;
 
+	text-align: center;
+	float: left;
 	cursor: pointer;
+}
+
+.game {
+	display: flex;
+	flex-direction: row;
 }
